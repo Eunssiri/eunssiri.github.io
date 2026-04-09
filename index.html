@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SinFusion-based Geological Model Augmentation and Well Data Integration</title>
+  <style>
+    :root {
+      --bg: #0b1020;
+      --panel: rgba(255,255,255,0.08);
+      --text: #f7f8fb;
+      --muted: #c7cede;
+      --accent: #8fd3ff;
+      --accent2: #c3f0ca;
+      --border: rgba(255,255,255,0.16);
+      --shadow: 0 20px 50px rgba(0,0,0,0.28);
+      --radius: 24px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(106,173,255,0.22), transparent 32%),
+        radial-gradient(circle at top right, rgba(145,255,187,0.16), transparent 28%),
+        linear-gradient(160deg, #0a1020 0%, #10162c 45%, #0c1324 100%);
+      min-height: 100vh;
+    }
+    .wrap {
+      width: min(1120px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 28px 0 56px;
+    }
+    .hero {
+      padding: 42px;
+      border: 1px solid var(--border);
+      background: linear-gradient(180deg, rgba(255,255,255,0.10), rgba(255,255,255,0.06));
+      backdrop-filter: blur(10px);
+      border-radius: 32px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      position: relative;
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: auto -90px -90px auto;
+      width: 220px;
+      height: 220px;
+      background: radial-gradient(circle, rgba(143,211,255,0.32), transparent 65%);
+      pointer-events: none;
+    }
+    .eyebrow {
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.10);
+      border: 1px solid rgba(255,255,255,0.14);
+      color: var(--accent2);
+      font-size: 14px;
+      letter-spacing: 0.02em;
+    }
+    h1 {
+      margin: 18px 0 14px;
+      font-size: clamp(2rem, 4vw, 3.35rem);
+      line-height: 1.08;
+      letter-spacing: -0.03em;
+      max-width: 900px;
+    }
+    .subtitle {
+      max-width: 820px;
+      color: var(--muted);
+      font-size: 1.05rem;
+      line-height: 1.75;
+      margin-bottom: 22px;
+    }
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 18px 0 28px;
+    }
+    .pill {
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
+      color: #eef4ff;
+      font-size: 0.95rem;
+    }
+    .cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 14px 18px;
+      border-radius: 16px;
+      text-decoration: none;
+      font-weight: 600;
+      border: 1px solid rgba(255,255,255,0.16);
+      transition: transform 0.18s ease, background 0.18s ease, border-color 0.18s ease;
+    }
+    .btn:hover { transform: translateY(-1px); }
+    .btn.primary {
+      background: linear-gradient(135deg, rgba(143,211,255,0.92), rgba(195,240,202,0.88));
+      color: #09111f;
+      border-color: transparent;
+    }
+    .btn.secondary {
+      background: rgba(255,255,255,0.08);
+      color: var(--text);
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 18px;
+      margin-top: 22px;
+    }
+    .card {
+      grid-column: span 4;
+      padding: 24px;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      background: var(--panel);
+      box-shadow: var(--shadow);
+    }
+    .card h2 {
+      margin: 0 0 10px;
+      font-size: 1.2rem;
+    }
+    .card p {
+      margin: 0 0 18px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+    .section {
+      margin-top: 22px;
+      padding: 28px;
+      border-radius: 28px;
+      border: 1px solid var(--border);
+      background: var(--panel);
+      box-shadow: var(--shadow);
+    }
+    .section h3 {
+      margin: 0 0 12px;
+      font-size: 1.35rem;
+    }
+    .section p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.8;
+    }
+    .footer {
+      margin-top: 18px;
+      color: rgba(255,255,255,0.72);
+      font-size: 0.95rem;
+      text-align: center;
+    }
+    @media (max-width: 920px) {
+      .card { grid-column: span 12; }
+      .hero { padding: 28px; }
+      .section { padding: 22px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <section class="hero">
+      <div class="eyebrow">EGU General Assembly 2026 · Poster Website</div>
+      <h1>SinFusion-based Geological Model Augmentation and Well Data Integration</h1>
+      <p class="subtitle">
+        This page provides quick access to the EGU abstract PDF, an interactive 3D geological model visualization,
+        and the original abstract page for convenient viewing from the poster QR code.
+      </p>
+      <div class="meta">
+        <div class="pill">Author: Eunsil Park et al.</div>
+        <div class="pill">Topic: Geological model augmentation</div>
+        <div class="pill">Method: SinFusion + well data integration</div>
+      </div>
+      <div class="cta-row">
+        <a class="btn primary" href="3d_visual_sand_silt_clay(1).html" target="_blank" rel="noopener">Open 3D Model</a>
+        <a class="btn secondary" href="EGU26-abstract.pdf" target="_blank" rel="noopener">View Abstract PDF</a>
+        <a class="btn secondary" href="https://meetingorganizer.copernicus.org/EGU26/EGU26-4683.html" target="_blank" rel="noopener">Original EGU Page</a>
+      </div>
+    </section>
+    <section class="grid">
+      <article class="card">
+        <h2>Interactive Visualization</h2>
+        <p>Explore the geological model in an interactive HTML viewer with direct rotation, zoom, and inspection in the browser.</p>
+        <a class="btn secondary" href="3d_visual_sand_silt_clay(1).html" target="_blank" rel="noopener">Launch Viewer</a>
+      </article>
+      <article class="card">
+        <h2>Abstract PDF</h2>
+        <p>Open the PDF version of the EGU abstract for a compact summary suitable for reading, sharing, or saving.</p>
+        <a class="btn secondary" href="EGU26-abstract.pdf" target="_blank" rel="noopener">Open PDF</a>
+      </article>
+      <article class="card">
+        <h2>Official Record</h2>
+        <p>Visit the official EGU abstract page to check the DOI-linked conference record and associated meeting information.</p>
+        <a class="btn secondary" href="https://meetingorganizer.copernicus.org/EGU26/EGU26-4683.html" target="_blank" rel="noopener">Go to EGU</a>
+      </article>
+    </section>
+    <section class="section">
+      <h3>About this work</h3>
+      <p>This study proposes a geological model characterization framework that combines stratigraphic forward modeling with a single-image diffusion model, SinFusion, to generate multiple geologically realistic realizations while enabling flexible well data integration during reverse diffusion. The approach is designed to support efficient model updates and ensemble-based uncertainty assessment in industrial-scale workflows.</p>
+    </section>
+    <p class="footer">Built for poster QR access · GitHub Pages ready</p>
+  </main>
+</body>
+</html>
