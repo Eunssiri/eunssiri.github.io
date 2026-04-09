@@ -1,0 +1,6 @@
+matplotlib==3.10.1
+numpy==2.2.1
+plotly==6.3.0
+scipy==1.15.2
+torch==2.5.1+cu121
+tqdm==4.67.1
